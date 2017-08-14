@@ -9,19 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @class CXMLParser;
-
 @protocol CXMLParserDelegate <NSObject>
-@optional
 
-- (void)adapterReady:(NSMutableDictionary *)currencyData;
-- (void)adapterParseError:(NSString *)error;
+- (void)parserDidFinishParsing:(CXMLParser *)parser withXMLData:(NSMutableDictionary *)data ;
 
 @end
 
 @interface CXMLParser : NSObject<NSXMLParserDelegate>
 
--(id)initWithURL:(NSURL *)currencyDataURL;
-+(CXMLParser *)sharedManager;
 @property (nonatomic, weak) id<CXMLParserDelegate> delegate;
+
+
++(CXMLParser *)sharedManager;
 
 @end

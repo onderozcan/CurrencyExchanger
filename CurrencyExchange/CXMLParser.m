@@ -6,14 +6,16 @@
 //  Copyright © 2017 pixelblind. All rights reserved.
 //
 #pragma mark Currency XML Parser
+#define currencyURL @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
+
 #import "CXMLParser.h"
-static NSXMLParser *cParser;
+
 static CXMLParser *adapter;
+static NSXMLParser *cParser;
 static NSString *currentTag;
 static NSMutableDictionary *currencyPool;
 
 @implementation CXMLParser
-@synthesize delegate;
 
 
 +(CXMLParser *)sharedManager
@@ -32,17 +34,28 @@ static NSMutableDictionary *currencyPool;
 }
 
 
--(id)initWithURL:(NSURL *)currencyDataURL{
+-(id)init{
 
-    cParser = [[NSXMLParser alloc] initWithContentsOfURL:currencyDataURL];
-    cParser.delegate = self;
-    [cParser parse];
+    
+    if (self = [super init]) {
+        
+        if([NSURL URLWithString:currencyURL]){
+            
+            cParser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:currencyURL]];
+            cParser.delegate = self;
+            [cParser parse];
+        }
+    }
+
+
+
     return self;
 }
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser{
     
-    //Document Starts...
+    //let the user know that parser has already started to parse XML.
+    NSLog(@"Adapter has started to parse XML");
     
 }
 
@@ -69,34 +82,18 @@ static NSMutableDictionary *currencyPool;
     }
 }
 
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-{
-    // if current tag is Name
-    if([currentTag isEqualToString:@"currency"]){
-        NSString *text = string;
-        NSLog(@"Currency Value =%@",text);
-    }
-}
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-{
-    if ([elementName isEqualToString:@"Name"]){
-        NSLog(@"Name end");
-        // Do what's necessary..
-    }
-    // set current tag as nil
-}
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser{
     
     //Document Ends...
     if([currencyPool isKindOfClass:[NSMutableDictionary class]] && currencyPool.count >0 ){
-    
-        [self.delegate adapterReady:currencyPool];
         
-    } else {
+        if(self.delegate){
+            [self.delegate parserDidFinishParsing:self withXMLData:currencyPool];
+
+        }
         
-        [delegate adapterParseError:@"Adapter could not find any currency object. Please check your XML url and try again."];
     }
     
 }

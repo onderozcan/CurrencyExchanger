@@ -13,7 +13,8 @@
 		5B3DA4C41F422D2500FD16EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3DA4C31F422D2500FD16EC /* Assets.xcassets */; };
 		5B3DA4C71F422D2500FD16EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B3DA4C51F422D2500FD16EC /* LaunchScreen.storyboard */; };
 		5B3DA4D01F422DB700FD16EC /* CXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3DA4CF1F422DB700FD16EC /* CXMLParser.m */; };
-		5B3DA4D31F42307C00FD16EC /* CurrencyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3DA4D21F42307C00FD16EC /* CurrencyVC.m */; };
+		5B6746AB1F42607700B2E216 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6746AA1F42607700B2E216 /* ViewController.m */; };
+		5B6746AE1F42675B00B2E216 /* testDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6746AD1F42675B00B2E216 /* testDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,8 +28,10 @@
 		5B3DA4C81F422D2500FD16EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3DA4CE1F422DB700FD16EC /* CXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLParser.h; sourceTree = "<group>"; };
 		5B3DA4CF1F422DB700FD16EC /* CXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLParser.m; sourceTree = "<group>"; };
-		5B3DA4D11F42307C00FD16EC /* CurrencyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyVC.h; sourceTree = "<group>"; };
-		5B3DA4D21F42307C00FD16EC /* CurrencyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyVC.m; sourceTree = "<group>"; };
+		5B6746A91F42607700B2E216 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5B6746AA1F42607700B2E216 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5B6746AC1F42675B00B2E216 /* testDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testDelegate.h; path = ../testDelegate.h; sourceTree = "<group>"; };
+		5B6746AD1F42675B00B2E216 /* testDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = testDelegate.m; path = ../testDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,8 @@
 		5B3DA4B61F422D2500FD16EC /* CurrencyExchange */ = {
 			isa = PBXGroup;
 			children = (
+				5B6746AC1F42675B00B2E216 /* testDelegate.h */,
+				5B6746AD1F42675B00B2E216 /* testDelegate.m */,
 				5B3DA4BA1F422D2500FD16EC /* AppDelegate.h */,
 				5B3DA4BB1F422D2500FD16EC /* AppDelegate.m */,
 				5B3DA4C01F422D2500FD16EC /* Main.storyboard */,
@@ -70,8 +75,8 @@
 				5B3DA4B71F422D2500FD16EC /* Supporting Files */,
 				5B3DA4CE1F422DB700FD16EC /* CXMLParser.h */,
 				5B3DA4CF1F422DB700FD16EC /* CXMLParser.m */,
-				5B3DA4D11F42307C00FD16EC /* CurrencyVC.h */,
-				5B3DA4D21F42307C00FD16EC /* CurrencyVC.m */,
+				5B6746A91F42607700B2E216 /* ViewController.h */,
+				5B6746AA1F42607700B2E216 /* ViewController.m */,
 			);
 			path = CurrencyExchange;
 			sourceTree = "<group>";
@@ -156,10 +161,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B6746AE1F42675B00B2E216 /* testDelegate.m in Sources */,
 				5B3DA4D01F422DB700FD16EC /* CXMLParser.m in Sources */,
 				5B3DA4BC1F422D2500FD16EC /* AppDelegate.m in Sources */,
+				5B6746AB1F42607700B2E216 /* ViewController.m in Sources */,
 				5B3DA4B91F422D2500FD16EC /* main.m in Sources */,
-				5B3DA4D31F42307C00FD16EC /* CurrencyVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +287,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = AS9STQL6S4;
 				INFOPLIST_FILE = CurrencyExchange/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.currencyexchange.CurrencyExchange;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -293,6 +300,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = AS9STQL6S4;
 				INFOPLIST_FILE = CurrencyExchange/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.currencyexchange.CurrencyExchange;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -318,6 +326,7 @@
 				5B3DA4CD1F422D2500FD16EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

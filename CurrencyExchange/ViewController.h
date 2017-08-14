@@ -1,5 +1,5 @@
 //
-//  CurrencyVC.h
+//  ViewController.h
 //  CurrencyExchange
 //
 //  Created by Önder ÖZCAN on 14/08/2017.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CurrencyVC : UIViewController
+@interface ViewController : UIViewController
 
 @end

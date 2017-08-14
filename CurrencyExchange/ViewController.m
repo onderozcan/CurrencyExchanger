@@ -1,45 +1,42 @@
 //
-//  CurrencyVC.m
+//  ViewController.m
 //  CurrencyExchange
 //
 //  Created by Önder ÖZCAN on 14/08/2017.
 //  Copyright © 2017 pixelblind. All rights reserved.
 //
 
-#import "CurrencyVC.h"
-#pragma mark XMLParser Adapter
+#import "ViewController.h"
 #import "CXMLParser.h"
-#define currencyURL @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
-
-@interface CurrencyVC ()<CXMLParserDelegate>
-
-@property CXMLParser *parser;
+#import "testDelegate.h"
+@interface ViewController ()<CXMLParserDelegate,testDelegateDelegate>{
+    
+    CXMLParser *parser;
+}
 
 @end
 
-@implementation CurrencyVC
+@implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    parser = [CXMLParser sharedManager];
+    parser.delegate = self;
     
-    if([NSURL URLWithString:currencyURL]){
-        self.parser = [[CXMLParser sharedManager] initWithURL:[NSURL URLWithString:currencyURL]];
-        [self.parser setDelegate:self];
-    }
-    
+    testDelegate *test = [[testDelegate alloc] init];
+    test.delegate = self;
+
 }
 
--(void)adapterReady:(NSMutableDictionary *)currencyData{
-#pragma mark CXMLParser has finished the parsing
-    NSLog(@"Parser is ready, Here is the currencies%@",currencyData);
-}
-
--(void)adapterParseError:(NSString *)error{
+-(void) isReady{
     
-    NSLog(@"Adapter Error =%@",error);
+    NSLog(@"is ready");
 }
-
+-(void)parserDidFinishParsing:(CXMLParser *)parser withXMLData:(NSMutableDictionary *)data{
+    
+    NSLog(@"%@", data);
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
