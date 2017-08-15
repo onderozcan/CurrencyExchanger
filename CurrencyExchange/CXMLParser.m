@@ -5,10 +5,8 @@
 //  Created by Önder ÖZCAN on 14/08/2017.
 //  Copyright © 2017 pixelblind. All rights reserved.
 //
-#pragma mark Currency XML Parser
-#define currencyURL @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
-
 #import "CXMLParser.h"
+#define currencyURL @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
 
 static CXMLParser *adapter;
 static NSXMLParser *cParser;
@@ -40,16 +38,19 @@ static NSMutableDictionary *currencyPool;
     if (self = [super init]) {
         
         if([NSURL URLWithString:currencyURL]){
-            
-            cParser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:currencyURL]];
-            cParser.delegate = self;
-            [cParser parse];
+            [self parseCurrency];
         }
     }
 
-
-
     return self;
+}
+
+-(void)parseCurrency{
+    
+    cParser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:currencyURL]];
+    cParser.delegate = self;
+    [cParser parse];
+
 }
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser{
@@ -76,12 +77,10 @@ static NSMutableDictionary *currencyPool;
                 //save in to Dictionary
                 [currencyPool setObject:currencyExchange forKey:attrValue];
             }
-
         }
         return;
     }
 }
-
 
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser{
@@ -89,11 +88,14 @@ static NSMutableDictionary *currencyPool;
     //Document Ends...
     if([currencyPool isKindOfClass:[NSMutableDictionary class]] && currencyPool.count >0 ){
         
-        if(self.delegate){
-            [self.delegate parserDidFinishParsing:self withXMLData:currencyPool];
-
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:
+         @"parserHasFinishedParsing" object:nil userInfo:currencyPool];
         
+        [NSTimer scheduledTimerWithTimeInterval: 30.0
+                                                    target: self
+                                                    selector:@selector(parseCurrency)
+                                                    userInfo: nil repeats:NO];
+
     }
     
 }
