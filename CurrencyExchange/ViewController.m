@@ -25,6 +25,7 @@ typedef enum {
     currencyData *cData;
     float gbpRate;
     float usdRate;
+    NSString *currentCurrency;
 }
 
 @end
@@ -48,6 +49,7 @@ typedef enum {
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    currentCurrency = @"GBP";
     parser = [CXMLParser sharedManager];
     //Setting all currency data as equal to 100
     [currencyData setEur:100];
@@ -88,6 +90,7 @@ typedef enum {
         case usd:
             //Set the dollar
             [self.buttonCurrency2 setTitle:@"USD" forState:UIControlStateNormal];
+            currentCurrency = @"USD";
 
             
             break;
@@ -95,6 +98,7 @@ typedef enum {
         case gbp:
             //set the pound
             [self.buttonCurrency2 setTitle:@"GBP" forState:UIControlStateNormal];
+            currentCurrency = @"GBP";
 
             break;
             
@@ -109,6 +113,22 @@ typedef enum {
 - (IBAction)exchange:(id)sender {
     
     
+}
+
+-(void)calculateRate{
+    
+    if([currentCurrency isEqualToString:@"USD"]){
+        
+        //Euro to USD
+        self.fieldCurrency2.text = [NSString stringWithFormat:@"%f",[currencyData getEur] * usdRate];
+    }
+    
+    if([currentCurrency isEqualToString:@"GBP"]){
+        
+        //Euro to USD
+        self.fieldCurrency2.text = [NSString stringWithFormat:@"%f",[currencyData getEur] * gbpRate];
+    }
+
     
 }
 
