@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B02BDE41F42973E00FBAA11 /* currencyData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B02BDE31F42973E00FBAA11 /* currencyData.m */; };
+		5B02BDE71F43BB3B00FBAA11 /* MainPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B02BDE61F43BB3B00FBAA11 /* MainPage.m */; };
+		5B02BDEA1F44025100FBAA11 /* CurrencyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B02BDE91F44025100FBAA11 /* CurrencyCell.m */; };
 		5B3DA4B91F422D2500FD16EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3DA4B81F422D2500FD16EC /* main.m */; };
 		5B3DA4BC1F422D2500FD16EC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3DA4BB1F422D2500FD16EC /* AppDelegate.m */; };
 		5B3DA4C21F422D2500FD16EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B3DA4C01F422D2500FD16EC /* Main.storyboard */; };
@@ -20,6 +22,10 @@
 /* Begin PBXFileReference section */
 		5B02BDE21F42973E00FBAA11 /* currencyData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = currencyData.h; sourceTree = "<group>"; };
 		5B02BDE31F42973E00FBAA11 /* currencyData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = currencyData.m; sourceTree = "<group>"; };
+		5B02BDE51F43BB3B00FBAA11 /* MainPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainPage.h; sourceTree = "<group>"; };
+		5B02BDE61F43BB3B00FBAA11 /* MainPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainPage.m; sourceTree = "<group>"; };
+		5B02BDE81F44025100FBAA11 /* CurrencyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyCell.h; sourceTree = "<group>"; };
+		5B02BDE91F44025100FBAA11 /* CurrencyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyCell.m; sourceTree = "<group>"; };
 		5B3DA4B41F422D2500FD16EC /* CurrencyExchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyExchange.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3DA4B81F422D2500FD16EC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5B3DA4BA1F422D2500FD16EC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -77,6 +83,10 @@
 				5B6746AA1F42607700B2E216 /* ViewController.m */,
 				5B02BDE21F42973E00FBAA11 /* currencyData.h */,
 				5B02BDE31F42973E00FBAA11 /* currencyData.m */,
+				5B02BDE51F43BB3B00FBAA11 /* MainPage.h */,
+				5B02BDE61F43BB3B00FBAA11 /* MainPage.m */,
+				5B02BDE81F44025100FBAA11 /* CurrencyCell.h */,
+				5B02BDE91F44025100FBAA11 /* CurrencyCell.m */,
 			);
 			path = CurrencyExchange;
 			sourceTree = "<group>";
@@ -162,8 +172,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B3DA4D01F422DB700FD16EC /* CXMLParser.m in Sources */,
+				5B02BDEA1F44025100FBAA11 /* CurrencyCell.m in Sources */,
 				5B02BDE41F42973E00FBAA11 /* currencyData.m in Sources */,
 				5B3DA4BC1F422D2500FD16EC /* AppDelegate.m in Sources */,
+				5B02BDE71F43BB3B00FBAA11 /* MainPage.m in Sources */,
 				5B6746AB1F42607700B2E216 /* ViewController.m in Sources */,
 				5B3DA4B91F422D2500FD16EC /* main.m in Sources */,
 			);

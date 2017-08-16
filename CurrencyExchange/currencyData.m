@@ -70,4 +70,11 @@ static currencyData *cData;
     return amountGBP;
 }
 
++(NSArray *)getAllCurrencies{
+    
+    NSArray *new = @[(NSNumber *)[self getEur],(NSNumber *)[self getGBP],(NSNumber *)[self getUSD]];
+    
+    return [NSArray arrayWithObjects:[[self getEur],[self getGBP],[self getUSD] count:0]];
+}
+
 @end

@@ -22,4 +22,6 @@
 +(float)getGBP;
 +(void)setGBP:(float)amount;
 
++(NSArray *)getAllCurrencies;
+
 @end

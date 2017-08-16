@@ -46,6 +46,7 @@ typedef enum {
 
 }
 
+
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
@@ -59,9 +60,10 @@ typedef enum {
     [self setButtonCurrency:0];
     [self setCurrencyFieldsWithAmount];
     
-    
-    
 }
+
+
+
 
 -(void)designButtons{
     
@@ -73,6 +75,7 @@ typedef enum {
 -(void)setCurrencyFieldsWithAmount{
     
     self.fieldCurrency1.text = [NSString stringWithFormat:@"%f",[currencyData getEur]];
+    self.fieldCurrency1.delegate = self;
     self.fieldCurrency2.text = [NSString stringWithFormat:@"%f",[currencyData getUSD]];
     [self.fieldCurrency1 becomeFirstResponder];
 
@@ -86,19 +89,22 @@ typedef enum {
             //Starting
             [self.buttonCurrency1 setTitle:@"EUR" forState:UIControlStateNormal];
             [self.buttonCurrency2 setTitle:@"GBP" forState:UIControlStateNormal];
+            self.fieldCurrency2.text = [NSString stringWithFormat:@"%f",[currencyData getEur] * gbpRate];
+
             break;
         case usd:
             //Set the dollar
             [self.buttonCurrency2 setTitle:@"USD" forState:UIControlStateNormal];
             currentCurrency = @"USD";
-
             
+            self.fieldCurrency2.text = [NSString stringWithFormat:@"%f",[currencyData getEur] * usdRate];
             break;
             
         case gbp:
             //set the pound
             [self.buttonCurrency2 setTitle:@"GBP" forState:UIControlStateNormal];
             currentCurrency = @"GBP";
+            self.fieldCurrency2.text = [NSString stringWithFormat:@"%f",[currencyData getEur] * gbpRate];
 
             break;
             
@@ -112,7 +118,17 @@ typedef enum {
 
 - (IBAction)exchange:(id)sender {
     
+    if([currentCurrency isEqualToString:@"USD"]){
+        
+        float currentVal = [currencyData getEur] * usdRate;
+        [currencyData setUSD:currentVal];
+    }
     
+    if([currentCurrency isEqualToString:@"GBP"]){
+        
+        float currentVal = [currencyData getEur] * gbpRate;
+        [currencyData setGBP:currentVal];
+    }
 }
 
 -(void)calculateRate{
@@ -125,7 +141,7 @@ typedef enum {
     
     if([currentCurrency isEqualToString:@"GBP"]){
         
-        //Euro to USD
+        //Euro to GBP
         self.fieldCurrency2.text = [NSString stringWithFormat:@"%f",[currencyData getEur] * gbpRate];
     }
 
@@ -161,12 +177,15 @@ typedef enum {
                                                     handler:^(UIAlertAction * action) {
                                                         
                                                         [self setButtonCurrency:2];
+                                                        [self calculateRate];
+
                                                     }];
     
     UIAlertAction *button2 = [UIAlertAction actionWithTitle:@"USD" style:UIAlertActionStyleDefault
                                                     handler:^(UIAlertAction *action) {
                                                         
                                                         [self setButtonCurrency:1];
+                                                        [self calculateRate];
                                                         
                                                     }];
     
@@ -180,6 +199,16 @@ typedef enum {
     
     if(textField.tag ==1){
         //exchange rate 1
+        
+        if([textField.text floatValue] >0 && [textField.text floatValue] <= 100){
+            [currencyData setEur:[textField.text floatValue]];
+            [self calculateRate];
+        } else {
+            
+            if([textField.text floatValue] >100){
+                textField.text = [NSString stringWithFormat:@"%f",[currencyData getEur]];
+            }
+        }
         
     }
     
