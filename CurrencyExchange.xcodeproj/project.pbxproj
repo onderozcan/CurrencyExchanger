@@ -16,7 +16,6 @@
 		5B3DA4C41F422D2500FD16EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3DA4C31F422D2500FD16EC /* Assets.xcassets */; };
 		5B3DA4C71F422D2500FD16EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B3DA4C51F422D2500FD16EC /* LaunchScreen.storyboard */; };
 		5B3DA4D01F422DB700FD16EC /* CXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3DA4CF1F422DB700FD16EC /* CXMLParser.m */; };
-		5B6746AB1F42607700B2E216 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6746AA1F42607700B2E216 /* ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,8 +35,6 @@
 		5B3DA4C81F422D2500FD16EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3DA4CE1F422DB700FD16EC /* CXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLParser.h; sourceTree = "<group>"; };
 		5B3DA4CF1F422DB700FD16EC /* CXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLParser.m; sourceTree = "<group>"; };
-		5B6746A91F42607700B2E216 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5B6746AA1F42607700B2E216 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +76,6 @@
 				5B3DA4B71F422D2500FD16EC /* Supporting Files */,
 				5B3DA4CE1F422DB700FD16EC /* CXMLParser.h */,
 				5B3DA4CF1F422DB700FD16EC /* CXMLParser.m */,
-				5B6746A91F42607700B2E216 /* ViewController.h */,
-				5B6746AA1F42607700B2E216 /* ViewController.m */,
 				5B02BDE21F42973E00FBAA11 /* currencyData.h */,
 				5B02BDE31F42973E00FBAA11 /* currencyData.m */,
 				5B02BDE51F43BB3B00FBAA11 /* MainPage.h */,
@@ -176,7 +171,6 @@
 				5B02BDE41F42973E00FBAA11 /* currencyData.m in Sources */,
 				5B3DA4BC1F422D2500FD16EC /* AppDelegate.m in Sources */,
 				5B02BDE71F43BB3B00FBAA11 /* MainPage.m in Sources */,
-				5B6746AB1F42607700B2E216 /* ViewController.m in Sources */,
 				5B3DA4B91F422D2500FD16EC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
