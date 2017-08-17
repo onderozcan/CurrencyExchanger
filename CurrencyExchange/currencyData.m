@@ -11,7 +11,7 @@ static float amountUSD;
 static float amountEuro;
 static float amountGBP;
 static currencyData *cData;
-
+static NSMutableDictionary *currencyDict;
 
 @implementation currencyData
 
@@ -34,6 +34,7 @@ static currencyData *cData;
     
     if (self = [super init]) {
         
+        currencyDict = [[NSMutableDictionary alloc] init];
 
     }
     
@@ -70,11 +71,59 @@ static currencyData *cData;
     return amountGBP;
 }
 
-+(NSArray *)getAllCurrencies{
++(float)getBalanceWithName:(NSString *)currencyName{
     
-    NSArray *new = @[(NSNumber *)[self getEur],(NSNumber *)[self getGBP],(NSNumber *)[self getUSD]];
+    [self getAllCurrencies];
+    float balance = [[currencyDict objectForKey:currencyName] floatValue];
+    return balance;
+}
+
++(void)setCurrency:(NSString *)currency1 andBalance:(float) balance1 andCurrency2:(NSString *)currency2 andBalance2:(float)balance2{
     
-    return [NSArray arrayWithObjects:[[self getEur],[self getGBP],[self getUSD] count:0]];
+    [currencyDict setValue:[NSNumber numberWithFloat:balance1] forKey:currency1];
+    [currencyDict setValue:[NSNumber numberWithFloat:balance2] forKey:currency2];
+    //And set the currencies
+    
+    if([currency1 isEqualToString:@"USD"]){
+        
+        [self setUSD:balance1];
+    }
+    
+    if([currency1 isEqualToString:@"GBP"]){
+        
+        [self setGBP:balance1];
+    }
+    
+    if([currency1 isEqualToString:@"EUR"]){
+        
+        [self setEur:balance1];
+    }
+    
+    if([currency2 isEqualToString:@"USD"]){
+        
+        [self setUSD:balance2];
+    }
+    
+    if([currency2 isEqualToString:@"GBP"]){
+        
+        [self setGBP:balance2];
+    }
+    
+    if([currency2 isEqualToString:@"EUR"]){
+        
+        [self setEur:balance2];
+    }
+    
+}
+
++(NSDictionary *)getAllCurrencies{
+    NSNumber *gbp = [NSNumber numberWithFloat:[self getGBP]];
+    NSNumber *eur = [NSNumber numberWithFloat:[self getEur]];
+    NSNumber *usd = [NSNumber numberWithFloat:[self getUSD]];
+    [currencyDict setObject:eur forKey:@"EUR"];
+    [currencyDict setObject:usd forKey:@"USD"];
+    [currencyDict setObject:gbp forKey:@"GBP"];
+    return currencyDict;
 }
 
 @end

@@ -20,4 +20,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelBalance1;
 @property (weak, nonatomic) IBOutlet UILabel *labelBalance2;
 
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl1;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl2;
+
+
 @end

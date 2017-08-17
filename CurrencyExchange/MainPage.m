@@ -11,16 +11,23 @@
 #import "CXMLParser.h"
 #import "currencyData.h"
 
-@interface MainPage ()<UICollectionViewDelegate,UICollectionViewDataSource>{
+@interface MainPage ()<UICollectionViewDelegate,UICollectionViewDataSource,CXMLParserDelegate>{
     
     CXMLParser *parser;
     currencyData *cData;
     float gbpRate;
     float usdRate;
+    NSInteger currentIndex1;
+    NSInteger currentIndex2;
+    float balance1;
+    float balance2;
+    CurrencyCell *cell1;
+    CurrencyCell *cell2;
 
 
 }
 @property NSArray *currencyArray;
+
 @property NSArray *reverseCurrencyArray;
 @end
 
@@ -35,23 +42,20 @@
     self.collection2.delegate = self;
     self.collection2.dataSource = self;
     self.collection2.tag = 2;
-    
     self.currencyArray = @[@"EUR",@"GBP",@"USD"];
+    self.reverseCurrencyArray = @[@"USD",@"GBP"];
     
-    parser = [CXMLParser sharedManager];
+    [[CXMLParser sharedManager] setDelegate:self];
     cData = [currencyData sharedManager];
     
     [currencyData setEur:100];
     [currencyData setGBP:100];
     [currencyData setUSD:100];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(parserHasFinishedParsing:)
-                                                 name:@"parserHasFinishedParsing"
-                                               object:nil];
-    
-    self.reverseCurrencyArray = [[self.currencyArray reverseObjectEnumerator] allObjects];
-
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(parserHasFinishedParsing:)
+//                                                 name:@"parserHasFinishedParsing"
+//                                               object:nil];
 
     
 }
@@ -61,16 +65,32 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)parserHasFinishedParsing: (NSNotification *) notification{
-    NSDictionary *userInfo = notification.userInfo;
-    gbpRate = [[userInfo objectForKey:@"GBP"] floatValue];
-    usdRate = [[userInfo objectForKey:@"USD"] floatValue];
+//-(void)parserHasFinishedParsing: (NSNotification *) notification{
+//    NSDictionary *userInfo = notification.userInfo;
+//    gbpRate = [[userInfo objectForKey:@"GBP"] floatValue];
+//    usdRate = [[userInfo objectForKey:@"USD"] floatValue];
+//    self.labelCurrency.text = [NSString stringWithFormat:@"1€ equals %.03f $ ",usdRate];
+//}
+
+-(void)adapterHasFinishedParsingWithDictionary:(NSDictionary *)data{
+    
+    gbpRate = [[data objectForKey:@"GBP"] floatValue];
+    usdRate = [[data objectForKey:@"USD"] floatValue];
+    self.labelCurrency.text = [NSString stringWithFormat:@"1€ equals %.03f $ ",usdRate];
+
 }
 
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return self.currencyArray.count;
+    if(collectionView.tag ==1){
+        return self.currencyArray.count;
+
+    } else {
+        
+        return self.reverseCurrencyArray.count;
+    }
+    
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -87,80 +107,114 @@
     switch (collectionView.tag) {
         case 1:
             cell.labelCurrency1.text = [self.currencyArray objectAtIndex:indexPath.row];
+            cell.fieldInput1.tag = 1;
+
+            [cell.fieldInput1 addTarget:self action:@selector(editingChanged:) forControlEvents:UIControlEventEditingChanged];
+
 
             switch (indexPath.row) {
                 case 0:
                     //Euro
-                    cell.labelBalance1.text = [NSString stringWithFormat:@"You have %2f €",[currencyData getEur]];
-                    
+                    cell.labelBalance1.text = [NSString stringWithFormat:@"You have %.03f €",[currencyData getEur]];
+                    cell.fieldInput1.text  = [NSString stringWithFormat:@"%.03f",[currencyData getEur]];
+                    return cell;
                 case 1:
                     //GBP
-                    cell.labelBalance1.text = [NSString stringWithFormat:@"You have %2f £",[currencyData getGBP]];
+                    cell.labelBalance1.text = [NSString stringWithFormat:@"You have %.03f £",[currencyData getGBP]];
+                    cell.fieldInput1.text  = [NSString stringWithFormat:@"%.03f",[currencyData getGBP]];
+                    return cell;
                     
                 case 2:
                     //USD
-                    cell.labelBalance1.text = [NSString stringWithFormat:@"You have %2f $",[currencyData getUSD]];
+                    cell.labelBalance1.text = [NSString stringWithFormat:@"You have %.03f $",[currencyData getUSD]];
+                    cell.fieldInput1.text  = [NSString stringWithFormat:@"%.03f",[currencyData getUSD]];
+
+                    return cell;
                     
             }
 
-            
             return cell;
+            
         case 2:
             cell.labelCurrency2.text = [self.reverseCurrencyArray objectAtIndex:indexPath.row];
-            [self setCurrency:indexPath.row isFirstCurrency:NO andCell:cell];
+            cell.fieldInput1.tag = 2;
+            
+            [cell.fieldInput2 addTarget:self action:@selector(editingChanged:) forControlEvents:UIControlEventEditingChanged];
+
+            switch (indexPath.row) {
+                case 0:
+                    //USD
+                    cell.labelBalance2.text = [NSString stringWithFormat:@"You have %.03f $",[currencyData getUSD]];
+                    cell.fieldInput2.text  = [NSString stringWithFormat:@"%.03f",[currencyData getUSD]];
+
+                    return cell;
+                case 1:
+                    //GBP
+                    cell.labelBalance2.text = [NSString stringWithFormat:@"You have %.03f £",[currencyData getGBP]];
+                    cell.fieldInput2.text  = [NSString stringWithFormat:@"%.03f",[currencyData getGBP]];
+
+                    return cell;
+                    
+                case 2:
+                    //Euro
+                    cell.labelBalance2.text = [NSString stringWithFormat:@"You have %.03f €",[currencyData getEur]];
+                    cell.fieldInput2.text  = [NSString stringWithFormat:@"%.03f",[currencyData getEur]];
+
+                    return cell;
+                    
+            }
+            
+            default:
             return cell;
-        default:
-            return cell;
+            
+    }
+}
+
+-(void)editingChanged:(UITextField *)sender{
+    
+    if(sender.tag == 1){
+        float change1 = [sender.text floatValue];
+        balance1 = change1;
+    }
+    
+    if(sender.tag == 2){
+        float change2 = [sender.text floatValue];
+        balance2 = change2;
     }
 }
 
 
--(void)setCurrency:(NSInteger)index isFirstCurrency:(BOOL)isFirst andCell:(CurrencyCell *)cell{
+-(void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    //Setting Labels.
-    //first currency collection
     
-    if(isFirst){
-        switch (cell.tag) {
-            case 0:
-                //Euro
-                cell.labelBalance1.text = [NSString stringWithFormat:@"You have %2f €",[currencyData getEur]];
-                break;
-
-            case 1:
-                //GBP
-                cell.labelBalance1.text = [NSString stringWithFormat:@"You have %2f £",[currencyData getGBP]];
-
-            case 2:
-                //USD
-                cell.labelBalance1.text = [NSString stringWithFormat:@"You have %2f $",[currencyData getUSD]];
-                
-            default:
-                break;
-        }
-    } else {
-        //second currency colleciton
-        switch (cell.tag) {
-            case 0:
-                //USD
-                cell.labelBalance2.text = [NSString stringWithFormat:@"You have %f $",[currencyData getUSD]];
-                
-
-                break;
-            case 1:
-                //GBP
-                cell.labelBalance2.text = [NSString stringWithFormat:@"You have %f £",[currencyData getGBP]];
-
-            case 2:
-                //EUR
-                cell.labelBalance2.text = [NSString stringWithFormat:@"You have %f €",[currencyData getEur]];
-
-                
-            default:
-                break;
+    if([cell isKindOfClass:[CurrencyCell class]]){
+        
+        CurrencyCell *tmpCell = (CurrencyCell *)cell;
+        
+        if(collectionView.tag == 1){
+            tmpCell.pageControl1.currentPage = indexPath.row;
+            currentIndex1 = indexPath.row;
+            balance1 = [tmpCell.fieldInput1.text floatValue];
+            cell1 = tmpCell;
         }
         
+        if(collectionView.tag == 2){
+            tmpCell.pageControl2.currentPage = indexPath.row;
+            currentIndex2 = indexPath.row;
+            balance2 = [tmpCell.fieldInput2.text floatValue];
+            
+            if(indexPath.row ==0){
+                self.labelCurrency.text = [NSString stringWithFormat:@"1€ equals %.03f $ ",usdRate];
+
+            } else {
+                self.labelCurrency.text = [NSString stringWithFormat:@"1€ equals %.03f £ ",gbpRate];
+
+            }
+
+            cell2 = tmpCell;
+        }
     }
+
 }
 
 
@@ -168,7 +222,36 @@
     
 
 }
+- (IBAction)exchange:(id)sender {
+    
+    
+    NSString *currency1 = [self.currencyArray objectAtIndex:currentIndex1];
+    NSString *currency2 = [self.reverseCurrencyArray objectAtIndex:currentIndex2];
+    //Exhange the currencies
+    //Calculate rates
+    float newBalance = 0;
+    
+    if([currency2 isEqualToString:@"GBP"]){
+        
+        newBalance  = balance1 * gbpRate + [currencyData getGBP]; //Euro to GBP calculation.
+    }
+    
+    if([currency2 isEqualToString:@"USD"]){
+        
+        newBalance  = (balance1 * usdRate) + [currencyData getUSD]; //Euro to USD calculation.
+    }
+    float remainBalance = [currencyData getBalanceWithName:currency1] - balance1;
+    
+    //Set Rates
+    [currencyData setCurrency:currency1 andBalance:remainBalance andCurrency2:currency2 andBalance2:newBalance];
+    
+    //Set fields.
+    cell1.fieldInput1.text = [NSString stringWithFormat:@"%f",remainBalance];
+    cell2.fieldInput2.text = [NSString stringWithFormat:@"%f",newBalance];
+    currency1 = [NSString stringWithFormat:@"%f",remainBalance];
+    currency2 = [NSString stringWithFormat:@"%f",newBalance];
 
+}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout

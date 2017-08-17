@@ -7,8 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+@class CXMLParser;
 
+@protocol CXMLParserDelegate <NSObject>
+
+@optional
+
+-(void)adapterHasFinishedParsingWithDictionary:(NSDictionary *)data;
+@end
 @interface CXMLParser : NSObject<NSXMLParserDelegate>
 +(CXMLParser *)sharedManager;
+-(void)parseCurrency;
+@property (retain) id <CXMLParserDelegate> delegate;
 
 @end

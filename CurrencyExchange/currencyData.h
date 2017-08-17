@@ -24,4 +24,8 @@
 
 +(NSArray *)getAllCurrencies;
 
++(void)setCurrency:(NSString *)currency1 andBalance:(float) balance1 andCurrency2:(NSString *)currency2 andBalance2:(float)balance2;
+
++(float)getBalanceWithName:(NSString *)currencyName;
+
 @end

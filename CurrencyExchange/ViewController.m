@@ -51,7 +51,6 @@ typedef enum {
     
     [super viewWillAppear:animated];
     currentCurrency = @"GBP";
-    parser = [CXMLParser sharedManager];
     //Setting all currency data as equal to 100
     [currencyData setEur:100];
     [currencyData setGBP:100];

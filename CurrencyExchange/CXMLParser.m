@@ -8,20 +8,22 @@
 #import "CXMLParser.h"
 #define currencyURL @"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
 
-static CXMLParser *adapter;
+static CXMLParser *adapter = nil;
+
 static NSXMLParser *cParser;
 static NSString *currentTag;
 static NSMutableDictionary *currencyPool;
+static BOOL firstInit;
 
 @implementation CXMLParser
 
 
 +(CXMLParser *)sharedManager
 {
-    
     if (adapter == nil) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
+            
             currencyPool = [[NSMutableDictionary alloc] init];
             adapter = [[CXMLParser alloc] init];
             
@@ -38,6 +40,7 @@ static NSMutableDictionary *currencyPool;
     if (self = [super init]) {
         
         if([NSURL URLWithString:currencyURL]){
+            firstInit = YES;
             [self parseCurrency];
         }
     }
@@ -88,14 +91,18 @@ static NSMutableDictionary *currencyPool;
     //Document Ends...
     if([currencyPool isKindOfClass:[NSMutableDictionary class]] && currencyPool.count >0 ){
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:
-         @"parserHasFinishedParsing" object:nil userInfo:currencyPool];
         
-        [NSTimer scheduledTimerWithTimeInterval: 30.0
-                                                    target: self
-                                                    selector:@selector(parseCurrency)
-                                                    userInfo: nil repeats:NO];
+        float timeInterval = firstInit ? 1.0 : 30.0;
+        [NSTimer scheduledTimerWithTimeInterval: timeInterval
+                                         target: self
+                                       selector:@selector(parseCurrency)
+                                       userInfo: nil repeats:NO];
+        
+        firstInit = NO;
+        
+        [self.delegate adapterHasFinishedParsingWithDictionary:currencyPool];
 
+        
     }
     
 }

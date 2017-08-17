@@ -11,5 +11,6 @@
 @interface MainPage : UIViewController
 @property (weak, nonatomic) IBOutlet UICollectionView *collection;
 @property (weak, nonatomic) IBOutlet UICollectionView *collection2;
+@property (weak, nonatomic) IBOutlet UILabel *labelCurrency;
 
 @end
